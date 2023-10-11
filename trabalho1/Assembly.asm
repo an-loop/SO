@@ -5,6 +5,7 @@ section .data
 
 section .bss
     num resd 1
+    char_in resb 1
 
 section .text
     global _start
@@ -16,7 +17,29 @@ _start:
     mov ecx, prompt ; endereço da string
     mov edx, 27 ; tamanho da string
     int 0x80 ; chama a syscall
+read_num:
+    ; Lê um caractere do teclado
+    mov eax, 3; sys_read
+    mov ebx, 0; stdin
+    mov ecx, char_in
+    mov edx, 1
+    int 0x80; chama a syscall
 
+    ; Verifica se o caractere é uma quebra de linha
+    cmp byte [char_in], 10
+    je paridade; pula para paridade
+
+    ; Converte o caractere ASCII para número
+    sub byte [char_in], '0'
+
+    ; Atualiza num (num = num*10 + char_in)
+    mov eax, [num]
+    imul eax, eax, 10
+    add eax, [char_in]
+    mov [num], eax
+
+    jmp read_num
+paridade:
     ; Lê o número digitado pelo usuário
     mov eax, 3 ; sys_read
     mov ebx, 0 ; stdin
