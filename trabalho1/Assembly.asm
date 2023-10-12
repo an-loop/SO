@@ -73,7 +73,5 @@ even:
     mov ecx, even_msg; endereço da string "par"
     mov edx, 9; tamanho da string "par"
     int 0x80 ; chama a syscall
-    
- int 0x80 ; chama a syscall
-    
+
 jmp exit
