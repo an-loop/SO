@@ -40,13 +40,6 @@ read_num:
 
     jmp read_num
 paridade:
-    ; Lê o número digitado pelo usuário
-    mov eax, 3 ; sys_read
-    mov ebx, 0 ; stdin
-    mov ecx, num ; endereço do buffer de leitura
-    mov edx, 4 ; tamanho do buffer de leitura (4 bytes para um inteiro)
-    int 0x80 ; chama a syscall
-
     ; Verifica se o número é par ou ímpar e escreve o resultado na tela
     mov eax, [num]
     and eax, 1 ; verifica o bit menos significativo (1 para ímpar, 0 para par)
@@ -73,5 +66,4 @@ even:
     mov ecx, even_msg; endereço da string "par"
     mov edx, 9; tamanho da string "par"
     int 0x80 ; chama a syscall
-
-jmp exit
+    jmp exit
