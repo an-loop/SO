@@ -1,0 +1,4 @@
+atividade3
+//Escreva um programa com 1 Avo, 1 Pai e 1 Filho,
+"elimine" o processo 'Pai' e veja quem sera o novo pai do
+processo 'Filho’
