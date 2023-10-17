@@ -1,5 +1,5 @@
-atividade3
-//Escreva um programa com 1 Avo, 1 Pai e 1 Filho, elimine" o processo Pai e veja quem sera o novo pai do processo Filho;
+//atividade3
+//Escreva um programa com 1 Avo, 1 Pai e 1 Filho, elimine o processo Pai e veja quem sera o novo pai do processo Filho;
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,19 +14,20 @@ int main() {
     //pid pai criando o filho
 
     if (pid == 0) {
-        printf("Filho: PID=%d PPID=%d\n", getpid(), getppid());
+        printf("Pai: PID=%d\n", getpid());
         exit(0);
         // se o pid for igual a 0, entao ele e o processo filho e mostrara seu pid
     } else if (pid > 0) {
         // se o pid for maior que 0, entao e o processo pai
         pid2 = fork();
         //processo pai se tornando avo 
-        if (pid2 == 0) {
-            printf("Pai: PID=%d PPID=%d\n", getpid(), getppid());
+        if (pid2 == 0) 
+          {
+            printf("Filho: PID=%d\n", getpid());
             exit(0);
 
         } else if (pid2 > 0) {
-            printf("Avo: PID=%d PPID=%d\n", getpid(), getppid());
+            printf("Avo: PID=%d\n ", getpid());
             sleep(10);
             //apos a duplicacao, encontra-se o processo pai e avo
             //ha uma espera para a finalizacao do processo

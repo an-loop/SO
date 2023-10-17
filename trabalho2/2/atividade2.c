@@ -1,20 +1,26 @@
-//Escreva um programa com 1 Pai e 2 Filhos
+//criar um processo pai e dois filhos
+
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 int main() {
-    pid_t pid[2];
+    int pid1, pid2;
 
-    for (int i = 0; i < 2; i++) {
-        pid[i] = fork();
-
-        if (pid[i] == 0) {
-            printf("O pid do filho %d\n", i + 1);
-            return 0;
-        }
+    pid1 = fork();
+    if (pid1 == 0) {
+        printf("Filho 1: Meu PID é %d. O PID do meu pai é %d.\n", getpid(), getppid());
+        exit(0);
     }
 
-    printf("Eu sou o Pai com pid %d\n");
+    pid2 = fork();
+    if (pid2 == 0) {
+        printf("Filho 2: Meu PID é %d. O PID do meu pai é %d.\n", getpid(), getppid());
+        exit(0);
+    }
+
+    printf("Pai: Meu PID é %d. Os PIDs dos meus filhos são %d e %d.\n", getpid(), pid1, pid2);
 
     return 0;
 }
+
