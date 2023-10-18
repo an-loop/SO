@@ -25,7 +25,7 @@ int main() {
     }
 
     //exibe o vetor 100 antes da criacao do Filho 
-    printf("Valor do Pai antes do Filho: \n");
+    printf("Valor do Pai antes do Filho ordenar: \n");
     for (int i = 0; i < 100; i++) {
         printf("%d ", vet[i]);
     }
@@ -40,7 +40,7 @@ int main() {
         //Processo Filho ordena o vetor 100
         sort(vet, 100);
 
-        printf("Valor do Filho depois do fork: \n");
+        printf("Valor do vetor ordenado pelo Filho depois do fork: \n");
         for (int i = 0; i < 100; i++) {
             printf("%d ", vet[i]);
         }
@@ -55,7 +55,7 @@ int main() {
 
 
         //processo Pai imprime na tela o vetor 100
-        printf("Valor do Pai depois do Filho: \n");
+        printf("Valor do vetor do Pai depois do Filho ordenar: \n");
         for (int i = 0; i < 100; i++) {
             printf("%d ", vet[i]);
         }

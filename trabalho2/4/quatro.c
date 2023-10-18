@@ -1,43 +1,52 @@
 #include <stdio.h>
 #include <pthread.h>
-#include <unistd.h>
-#include <stdlib.h>
+
+
 #define NUM_THREADS 3
+volatile int turn = 0;
 
-void* imprime_A(void *threadid) { //uma thread vai rodar essa função
-    printf("A"); //impreme na tela
-    sleep(1); //espera 1 segundo
-    pthread_exit (NULL); //encerra
+
+void* imprime_A(void* threadid) { // uma thread vai rodar essa função
+    while(1) { //loop infinito
+        while(turn == 0){ //loop q continua quando turn for igual a 0. Faz a thread esperar sua vez para printar A
+        printf("A"); // imprime A na tela
+        turn = 1; // muda o valor, passa para proxima thread
+        }
+        
+    }
 }
 
-void* imprime_B(void *threadid) { //uma thread vai rodar essa função
-    printf("B"); //impreme na tela
-    sleep(1); //espera 1 segundo
-    pthread_exit (NULL); //encerra
+void* imprime_B(void* threadid) { // uma thread vai rodar essa função
+    while(1) { //loop infinito
+        while(turn == 1){ //loop q continua quando turn for igual a 1. Faz a thread esperar sua vez para printar B
+        printf("B"); // imprime B na tela
+        turn = 2; // muda o valor, passa para proxima thread
+        }
+        
+    }
 }
 
-void* imprime_C(void *threadid) { //uma thread vai rodar essa função
-    printf("C"); //impreme na tela
-    sleep(1); //espera 1 segundo
-    pthread_exit (NULL); //encerra
+void* imprime_C(void* threadid) { // uma thread vai rodar essa função
+    while(1) { //loop infinito
+        while(turn == 2){ //loop q continua quando turn for igual a 2. Faz a thread esperar sua vez para printar C
+        printf("C\n"); // imprime C na tela
+        turn = 0; // muda o valor, passa para proxima thread
+        }
+        
+    }
 }
 
 int main() {
-    pthread_t thread[NUM_THREADS]; //cria array, cada elemento é um identificador de threand
-    int status, i; //variaveis para argumentos das threads
+    pthread_t thread[NUM_THREADS]; //cria array, cada elemento é um identificador da thread
 
     
-    status = pthread_create (&thread[0], NULL, imprime_A, (void *) 0); //cria thread 1 e define sua função "impreme_A"
-    status = pthread_create (&thread[1], NULL, imprime_B, (void *) 1); //cria thread 1 e define sua função "impreme_B"
-    status = pthread_create (&thread[2], NULL, imprime_C, (void *) 2); //cria thread 1 e define sua função "impreme_C"
+    pthread_create (&thread[0], NULL, imprime_A, NULL); //cria thread 1 e define sua função "impreme_A"
+    pthread_create (&thread[1], NULL, imprime_B, NULL); //cria thread 2 e define sua função "impreme_B"
+    pthread_create (&thread[2], NULL, imprime_C, NULL); //cria thread 3 e define sua função "impreme_C"
     
-    for(i=0; i< NUM_THREADS; i++){  //checa erros na criação das threads
-        if (status) { 
-            perror ("pthread_create");
-            exit (-1);
-        }
+    for(int i=0; i< NUM_THREADS; i++){ 
         pthread_join(thread[i], NULL); //não permite que a função principal termine antes de todas as threads forem executadas
     }
 
-    pthread_exit (NULL); //encerra
+    return 0;
 }
