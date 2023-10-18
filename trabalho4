@@ -1,0 +1,76 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <pthread.h>
+#include <semaphore.h>
+#include <unistd.h>
+
+#define NUM_CHAIRS 5
+
+sem_t customers; // Semáforo para controlar os clientes
+sem_t barberChair; // Semáforo para controlar a cadeira do barbeiro
+sem_t barberPillow; // Semáforo para controlar o travesseiro do barbeiro
+sem_t seatBelt; // Semáforo para controlar o cinto do barbeiro
+
+int numCustomers = 20; // Número total de clientes
+
+void *barber(void *arg) {
+    while (1) {
+        // Espera por um cliente
+        sem_wait(&customers);
+
+        // Libera a cadeira
+        printf("o Barbeiro volta a dormir na cadeira.\n\n");
+        sem_post(&barberChair);
+        
+        
+
+        // Termina de cortar o cabelo
+        sem_post(&seatBelt);
+    }
+}
+
+void *customer(void *arg) {
+    int id = *((int *)arg);
+
+    // Verifica se há uma cadeira vazia
+    if (sem_trywait(&barberChair) == 0) {
+        printf("Cliente %d chegou e acordou o barbeiro que estava dormindo na cadeira.\n", id);
+        printf("Cliente %d está cortando o cabelo.\n", id);
+        sleep(2);
+
+        printf("Cliente %d terminou o corte de cabelo e foi embora.\n", id);
+        sem_post(&customers); // Libera o barbeiro
+    } else {
+        // Não há cadeira vazia, o cliente vai embora insatisfeito
+        printf("Cliente %d não encontrou a cadeira vazia e foi embora insatisfeito.\n", id);
+    }
+}
+
+int main() {
+    pthread_t barberThread;
+    pthread_t customerThreads[numCustomers];
+    int customerArgs[numCustomers];
+
+    sem_init(&customers, 0, 0);
+    sem_init(&barberChair, 0, 1);
+    sem_init(&barberPillow, 0, 0);
+    sem_init(&seatBelt, 0, 0);
+
+    pthread_create(&barberThread, NULL, barber, NULL);
+
+    for (int i = 0; i < numCustomers; i++) {
+        customerArgs[i] = i;
+        pthread_create(&customerThreads[i], NULL, customer, &customerArgs[i]);
+        sleep(1); // Cria clientes com um pequeno atraso
+    }
+
+    for (int i = 0; i < numCustomers; i++) {
+        pthread_join(customerThreads[i], NULL);
+    }
+
+    // Aguarda o barbeiro terminar
+    pthread_cancel(barberThread);
+    pthread_join(barberThread, NULL);
+
+    return 0;
+}
