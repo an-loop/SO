@@ -1,4 +1,4 @@
-etapa 1
+//etapa 1
 //Escreva um programa com 1 Avo, 1 Pai e 1 Filho
 
 #include <iostream>
@@ -13,15 +13,15 @@ int main() {
         // duplicacao de pid1
         pid2 = fork();
         if (pid2 == 0) {
-            // processo avo
-            printf("Eu sou o processo avo com PID %d\n", getpid());
-        } else {
             // processo filho
             printf("Eu sou o processo filho com PID %d\n", getpid());
+        } else {
+            // processo pai
+            printf("Eu sou o processo pai com PID %d\n", getpid());
         }
     } else {
-        // processo pai
-        printf("Eu sou o processo pai com PID %d\n", getpid());
+        // processo avo
+        printf("Eu sou o processo avo com PID %d\n", getpid());
     }
     return 0;
 }
