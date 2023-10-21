@@ -41,6 +41,17 @@ int main() {
             printf("Sou o Filho: PID=%d e meu novo pai é PID=%d\n",getpid(),getppid());
             //Quando um processo morre, seus filhos sao adotados pelo processo init, que tem PID = 1
 
+          if (pid_filho > 0) {
+            printf("Processo pai (PID %d) eliminado. Novo pai: processo avô
+            (PID %d).\n", getpid(), pid_avo);
+            // espera o segundo filho terminar
+            wait(NULL);
+            } else {
+         // código do segundo filho
+           printf("Processo filho (PID %d) criado pelo novo pai (PID
+          %d).\n", getpid(), pid_avo);
+}
+            
         } else {
             perror("fork");
             exit(1);
