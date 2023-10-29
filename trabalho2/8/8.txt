@@ -1,0 +1,8 @@
+//Crie um programa (ou altere um dos anteriores) de
+modo a lhe permitir comparar o desempenho para a
+realização da(s) tarefa(s) do programa através do uso de
+primitivas fork e através de threads (calcule a média de
+tempo de 20 simulações
+
+
+
