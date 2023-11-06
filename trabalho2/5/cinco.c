@@ -36,6 +36,10 @@ int main() {
         //valor final do pid do pai 
         printf("Valor final do Pai: %d\n", pid);
     }
+    return 0;
+}
+
+
 
 
     //O valor inicial do PAI é 1 e o final continua o mesmo valor independentemente da alteração feita pelo Filho
@@ -43,8 +47,3 @@ int main() {
     //o processo Pai age isolado do processo filho
     //Isso é, o Filho tem sua propria copia do valor e qualquer alteracao feita nele não afetará o valor do Pai.
 
-
-
-
-    return 0;
-}

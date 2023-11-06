@@ -61,12 +61,10 @@ int main() {
         }
         printf("\n");
     }
+    return 0;
+}
 
 
     //os processos Pai e Filho terao vetores diferentes, pois apos a criacao do Filho
     //ele age de forma independente, possuindo seu proprio espaço de memoria.
     //ou seja, qualquer alteracao realizada no vetor do filho nao influenciara no processo Pai
-
-
-    return 0;
-}

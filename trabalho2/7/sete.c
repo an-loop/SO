@@ -58,3 +58,13 @@ int main()
 
     return 0;
 }
+
+
+
+    //o numero de criacao de threads são muito menores que de criacao de processos
+    //porque
+    //se as threads forem criadas em um loop infinito ou sem controle, 
+    //o sistema operacional pode não conseguir gerenciar tantas threads simultaneamente
+    //causando um erro de falta de recursos ou limite excedido
+    //cada thread tem uma pilha e existem muitas threads dentro de um processo
+    //se o tamanho das pilhas das threads exceder o espaço disponivel no processo, pode ocorrer um erro
